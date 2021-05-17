@@ -43,6 +43,20 @@ const createHiddenInputs = function (...arrArgs) {
 	return result;
 };
 
+const createElement = function (obj) {
+	const result = document.createElement(obj.tag);
+	if (obj.id) {
+		result.setAttribute('id', obj.id);
+	}
+	if (obj.class) {
+		if (typeof obj.class === 'string') {
+			result.classList.add(obj.class);
+		} else if (obj.class.length > 0) {
+			obj.class.forEach(cls => result.classList.add(cls));
+		}
+	}
+	return result;
+};
 function changeSerialize(formData, inputName, inputValue) {
 	for (i = 0; i < formData.length; i++) {
 		if (formData[i].name == inputName) {
@@ -305,35 +319,6 @@ function checkAllInTbodyBootstrap(el) {
 	}
 }
 
-function getTargetFromParentsToChildByClass(el, className) {
-	let target = el;
-	if (target.classList.contains(className)) {
-		return target;
-	}
-	while (true) {
-		if (target.parentElement === null) {
-			break;
-		} else if (target.parentElement.classList.contains(className)) {
-			return target.parentElement;
-		}
-		target = target.parentElement;
-	}
-	return getChildByClass(el, className);
-}
-
-function getChildByClass(el, className) {
-	let children = el.children;
-	for (let i = 0; i < children.length; i++) {
-		if (children[i] === undefined) {
-			return null;
-		} else if (children[i].classList.contains(className)) {
-			return children[i];
-		} else {
-			getChildByClass(children[i], className);
-		}
-	}
-}
-
 function convertNumberToDashedDate(num) {
 	if (num == null && num.toString().length !== 8) return num;
 	const strNum = num.toString();
@@ -488,4 +473,31 @@ const hideItem = function (item) {
 
 const movePage = function (url) {
 	location.href = url;
+}
+
+const wrapElement = function (target, wrapperTag, ...classes) {
+	const wrapper = document.createElement(wrapperTag);
+	classes.forEach(clss => wrapper.classList.add(clss));
+	wrapper.innerHTML = target.outerHTML;
+	target.parentNode.insertBefore(wrapper, target);
+	target.remove();
+	return wrapper;
+};
+
+const wrapAllElement = function (targets, wrapperTag) {
+	Array.from(targets).forEach(el => wrapElement(el, wrapperTag));
+}
+
+const isEmpty = function(value) {
+	if (value === "" || value === null || value === undefined || (value !== null && typeof value === 'object' && !Object.keys(value).length)) {
+		return true;
+	}
+	return false;
+}
+
+const isNotEmpty = function(value) {
+	if (value === "" || value === null || value === undefined || (value !== null && typeof value === 'object' && !Object.keys(value).length)) {
+		return false;
+	}
+	return true;
 }
