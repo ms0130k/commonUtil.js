@@ -501,3 +501,10 @@ const isNotEmpty = function(value) {
 	}
 	return true;
 }
+
+const replaceNull = function (value, wordToReplace) {
+	if (value === null || value === undefined || value === '') {
+		return wordToReplace;
+	}
+	return value;
+};
