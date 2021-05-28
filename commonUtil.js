@@ -508,3 +508,21 @@ const replaceNull = function (value, wordToReplace) {
 	}
 	return value;
 };
+
+const exchangeInnerHTML = function (el_a, el_b) {
+	let temp = el_a.innerHTML;
+	el_a.innerHTML = el_b.innerHTML;
+	el_b.innerHTML = temp;
+};
+
+const exchangeChildsInnerHTML = function (el_a, el_b, ...excludeNums) {
+	const children_a = el_a.children;
+	const children_b = el_b.children;
+	if (children_a.length !== children_b.length)
+		return;
+	
+	for (let i = 0, length = children_a.length; i < length; i++) {
+		if (excludeNums.indexOf(i) !== -1) continue;
+		exchangeInnerHTML(children_a[i], children_b[i]);
+	}
+};
