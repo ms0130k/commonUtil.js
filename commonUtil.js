@@ -526,3 +526,11 @@ const exchangeChildsInnerHTML = function (el_a, el_b, ...excludeNums) {
 		exchangeInnerHTML(children_a[i], children_b[i]);
 	}
 };
+
+const resetForm = function (form) {
+	form.reset();
+	const selects = form.getElementsByTagName('select');
+	for (let i = 0, length = selects.length; i < length; i++) {
+		selects[i].options[0].selected = true;
+	}
+};
