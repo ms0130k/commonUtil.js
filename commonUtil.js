@@ -534,3 +534,20 @@ const resetForm = function (form) {
 		selects[i].options[0].selected = true;
 	}
 };
+
+//참고
+(function () {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '<c:url value="${sessionScope.jssfc}/web/bsm/ntb/getNoticeImg.do?bbscttNo=${bbsInfoVo.bbscttNo}"/>', true);
+	xhr.responseType = 'arraybuffer';
+	xhr.onload = function( e ) { 
+		// Obtain a blob: URL for the image data.
+	 	var arrayBufferView = new Uint8Array( this.response );
+		var blob = new Blob( [ arrayBufferView ] );
+		var urlCreator = window.URL || window.webkitURL;
+		var imageUrl = urlCreator.createObjectURL( blob );
+		smallImgView.src = imageUrl;
+		bigImgView.src = imageUrl;
+	};
+	xhr.send(); 
+})();
