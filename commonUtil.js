@@ -175,14 +175,15 @@ function validateEachWord(array, count) {
 }
 
 HTMLElement.prototype.closestByClass = function (className) {
-	let target = this;
-	while (!target.parentElement.classList.contains(className)) {
-		if (target.parentElement == null) {
-			return null;
+	var result = this;
+	while (!result.classList.contains(className)) {
+		if (result.parentElement === null) {
+			result = null;
+			break;
 		}
-		target = target.parentElement;
+		result = result.parentElement;
 	}
-	return target.parentElement;
+	return result;
 };
 
 HTMLElement.prototype.siblingByClass = function (className) {
