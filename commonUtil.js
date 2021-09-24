@@ -552,3 +552,9 @@ const resetForm = function (form) {
 	};
 	xhr.send(); 
 })();
+
+const domReady = (callback) => {
+	document.addEventListener("DOMContentLoaded", () => {
+		callback();
+	});
+};
